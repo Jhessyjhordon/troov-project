@@ -28,9 +28,14 @@ const userSchema = new mongoose.Schema(
 
 // Middleware pour hasher le mot de passe avant sauvegarde
 userSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) return next();
-  this.password = await bcrypt.hash(this.password, 10);
-  next();
+    if (!this.isModified('password')) return next(); // Si le mot de passe n'est pas modifié, ne pas le re-hasher
+    try {
+      const salt = await bcrypt.genSalt(10);
+      this.password = await bcrypt.hash(this.password, salt);
+      next();
+    } catch (err) {
+      next(err);
+    }
 });
 
 // Méthode pour vérifier le mot de passe
