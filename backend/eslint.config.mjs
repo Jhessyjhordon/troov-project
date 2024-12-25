@@ -1,16 +1,32 @@
 import globals from "globals";
 import pluginJs from "@eslint/js";
+import pluginJest from "eslint-plugin-jest";
 
-
-/** @type {import('eslint').Linter.Config[]} */
 export default [
   {
     files: ["**/*.js"],
-    languageOptions: { sourceType: "commonjs" },
+    languageOptions: {
+      sourceType: "commonjs",
+      globals: {
+        ...globals.node,
+      },
+    },
+    plugins: {
+      jest: pluginJest,
+    },
     rules: {
-      "semi": ["error", "always"] // Oblige les points-virgules
+      "semi": ["error", "always"], // Oblige les points-virgules
+      ...pluginJs.configs.recommended.rules,
+      ...pluginJest.configs.recommended.rules,
     },
   },
-  { languageOptions: { globals: globals.node } },
-  pluginJs.configs.recommended,
+  {
+    // Spécifiquement pour les fichiers de test
+    files: ["**/tests/**/*.js"],
+    languageOptions: {
+      globals: {
+        ...globals.jest, // Ajout des globals Jest pour les fichiers de test
+      },
+    },
+  },
 ];
