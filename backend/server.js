@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const apiRoutes = require('./routes/api'); // Importation des routes API
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
+const cors = require('cors');
 
 // Charger les variables d'environnement
 dotenv.config();
@@ -23,6 +24,9 @@ const swaggerOptions = {
 };
 
 const swaggerDocs = swaggerJsdoc(swaggerOptions);
+
+// Autoriser CORS
+app.use(cors());
 
 // Middleware pour parser le JSON
 app.use(express.json());
