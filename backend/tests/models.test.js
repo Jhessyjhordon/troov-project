@@ -30,11 +30,20 @@ describe('MongoDB Models', () => {
     });
 
     it('should create and save an object linked to a user successfully', async () => {
-        const user = await User.findOne({ email: 'test@example.com' });
-        const objectData = { name: 'Test Object', description: 'A test object', userId: user._id };
-        const object = new ObjectModel(objectData);
+        const user = new User({
+            email: 'testuser@example.com',
+            password: 'password123',
+        });
+        await user.save();
+
+        const object = new ObjectModel({
+            name: 'Sample Object',
+            description: 'This is a sample description',
+            userId: user._id, // Lier l’objet à l’utilisateur créé
+        });
+
         const savedObject = await object.save();
         expect(savedObject._id).toBeDefined();
-        expect(savedObject.userId).toEqual(user._id);
+        expect(savedObject.userId.toString()).toBe(user._id.toString());
     });
 });
