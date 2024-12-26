@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 
 // Définition du schéma Utilisateur
 const userSchema = new mongoose.Schema(
@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-// Middleware pour hasher le mot de passe avant sauvegarde
+// Middleware pour hasher automatiquement le mot de passe avant sauvegarde
 userSchema.pre('save', async function (next) {
     if (!this.isModified('password')) return next(); // Si le mot de passe n'est pas modifié, ne pas le re-hasher
     try {
@@ -34,6 +34,8 @@ userSchema.pre('save', async function (next) {
       this.password = await bcrypt.hash(this.password, salt);
       next();
     } catch (err) {
+      console.log("-------> error" + err);
+      
       next(err);
     }
 });

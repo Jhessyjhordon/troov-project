@@ -6,11 +6,9 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
 const cors = require('cors');
 
-// Charger les variables d'environnement
-dotenv.config();
 
-// Initialiser l'application Express
-const app = express();
+dotenv.config(); // Charger les variables d'environnement
+const app = express(); // Initialiser l'application Express
 
 const swaggerOptions = {
     definition: {
@@ -25,11 +23,8 @@ const swaggerOptions = {
 
 const swaggerDocs = swaggerJsdoc(swaggerOptions);
 
-// Autoriser CORS
-app.use(cors());
-
-// Middleware pour parser le JSON
-app.use(express.json());
+app.use(cors()); // Autoriser CORS
+app.use(express.json()); // Middleware pour parser le JSON
 
 // Connexion à MongoDB
 mongoose
