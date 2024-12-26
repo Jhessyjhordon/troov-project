@@ -1,5 +1,7 @@
 const express = require('express');
 const ObjectModel = require('../models/object');
+const registerRoute = require('./register'); // Chemin vers ton fichier de route
+const loginRoute = require('./login'); // Chemin vers ton fichier de route
 
 const router = express.Router();
 
@@ -28,5 +30,9 @@ router.get('/objects/:userId', async (req, res) => {
         res.status(500).json({ message: 'Erreur lors de la récupération des objets.' });
     }
 });
+
+// Inclure les routes spécifiques
+router.use('/users', registerRoute);
+router.use('/users', loginRoute);
 
 module.exports = router;
