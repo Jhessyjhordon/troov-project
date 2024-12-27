@@ -1,11 +1,12 @@
 const express = require('express');
 const UserModel = require('../models/user');
 const authMiddleware = require('../middleware/auth'); // Middleware JWT
+const checkUserRights = require('../middleware/checkUserRights');
 
 const router = express.Router();
 
 // Récupérer un utilisateur par son ID
-router.get('/:id', authMiddleware, async (req, res) => {
+router.get('/:id', authMiddleware, checkUserRights, async (req, res) => {
     try {
         const userId = req.params.id;
 
@@ -22,7 +23,7 @@ router.get('/:id', authMiddleware, async (req, res) => {
 });
 
 // Modifier un utilisateur
-router.put('/:id', authMiddleware, async (req, res) => {
+router.put('/:id', authMiddleware, checkUserRights, async (req, res) => {
     try {
         const userId = req.params.id;
 
@@ -45,7 +46,7 @@ router.put('/:id', authMiddleware, async (req, res) => {
 });
 
 // Supprimer un utilisateur
-router.delete('/:id', authMiddleware, async (req, res) => {
+router.delete('/:id', authMiddleware, checkUserRights, async (req, res) => {
     try {
         const userId = req.params.id;
 

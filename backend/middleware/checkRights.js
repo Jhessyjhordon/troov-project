@@ -23,3 +23,11 @@ const checkRights = async (req, res, next) => {
 };
 
 module.exports = checkRights;
+
+
+
+
+
+// A FAIRE CREER UN BRANCHE checkUserRights POUR LE MIDDLEWARE checkUserRights
+// A LA FIN merge cette branche dans la branche checkRights-middleware 
+// Enfin repush la branche checkRights-middleware 
