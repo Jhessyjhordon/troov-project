@@ -15,7 +15,7 @@ const router = express.Router();
 // Routes pour les objets
 router.post('/', validateObject, createObject);
 router.get('/:id', verifyToken, checkRights, getObjectById);
-router.get('/', verifyToken, getAllObjects);
+router.get('/', verifyToken, checkRights, getAllObjects);
 router.put('/:id', validateObject, verifyToken, checkRights, updateObject);
 router.delete('/:id', verifyToken, checkRights, deleteObject);
 
