@@ -1,6 +1,28 @@
 const User = require('../models/user');
 
-// Controller d'inscription
+/**
+ * Inscription d'un nouvel utilisateur.
+ * @async
+ * @function
+ * @param {Object} req - La requête HTTP.
+ * @param {Object} res - La réponse HTTP.
+ * @description Crée un nouvel utilisateur en hachant son mot de passe avant de le sauvegarder.
+ * @returns {Object} 201 - Utilisateur créé avec succès.
+ * @returns {Object} 400 - Erreur de validation ou email déjà utilisé.
+ * @returns {Object} 500 - Erreur interne du serveur.
+ * @example
+ * // Entrée (JSON Body)
+ * {
+ *   "email": "test@example.com",
+ *   "password": "Password123"
+ * }
+ * @example
+ * // Sortie (201 Created)
+ * {
+ *   "message": "Utilisateur créé avec succès.",
+ *   "userId": "646c5b4b7a0a1e2345678abc"
+ * }
+ */
 exports.registerController = async (req, res) => {
     try {
         const { email, password } = req.body;
