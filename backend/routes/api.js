@@ -1,8 +1,9 @@
 const express = require('express');
 const ObjectModel = require('../models/object');
-const registerRoute = require('./register'); // Chemin vers ton fichier de route
-const loginRoute = require('./login'); // Chemin vers ton fichier de route
-const user = require('./user'); // Chemin vers ton fichier de route
+const registerRoute = require('./register'); 
+const loginRoute = require('./login'); 
+const userRoute = require('./user'); 
+const objectRoute = require('./object'); 
 
 const router = express.Router();
 
@@ -35,6 +36,7 @@ router.get('/objects/:userId', async (req, res) => {
 // Inclure les routes spécifiques
 router.use('/users', registerRoute);
 router.use('/users', loginRoute);
-router.use('/users', user);
+router.use('/users', userRoute);
+router.use('/object', objectRoute);
 
 module.exports = router;
