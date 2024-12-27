@@ -1,6 +1,7 @@
 const express = require('express');
 const ObjectModel = require('../models/object');
 const verifyToken = require('../middleware/auth');
+const checkRights = require('../middleware/checkRights');
 
 const router = express.Router();
 
@@ -24,7 +25,7 @@ router.post('/', async (req, res) => {
 });
 
 // Récupérer un object par son ID
-router.get('/:id', verifyToken, async (req, res) => {
+router.get('/:id', verifyToken, checkRights, async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -58,7 +59,7 @@ router.get('/', verifyToken, async (req, res) => {
 });
 
 // Mise à jour d’un objet
-router.put('/:id', verifyToken, async (req, res) => {
+router.put('/:id', verifyToken, checkRights, async (req, res) => {
   try {
     const updatedObject = await ObjectModel.findByIdAndUpdate(
       req.params.id,
@@ -78,7 +79,7 @@ router.put('/:id', verifyToken, async (req, res) => {
 });
 
 // Suppression d’un objet
-router.delete('/:id', verifyToken, async (req, res) => {
+router.delete('/:id', verifyToken, checkRights, async (req, res) => {
   try {
       const deletedObject = await ObjectModel.findByIdAndDelete(req.params.id);
 
@@ -92,7 +93,5 @@ router.delete('/:id', verifyToken, async (req, res) => {
       res.status(500).json({ message: 'Erreur lors de la suppression de l\'objet.' });
   }
 });
-
-
 
 module.exports = router;
