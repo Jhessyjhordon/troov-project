@@ -2,11 +2,12 @@ const express = require('express');
 const ObjectModel = require('../models/object');
 const verifyToken = require('../middleware/auth');
 const checkRights = require('../middleware/checkRights');
+const validateObject = require('../middleware/validateObject');
 
 const router = express.Router();
 
 // Route pour créer un objet
-router.post('/', async (req, res) => {
+router.post('/', validateObject, async (req, res) => {
   try {
     const { name, description, userId } = req.body;
 
@@ -59,7 +60,7 @@ router.get('/', verifyToken, async (req, res) => {
 });
 
 // Mise à jour d’un objet
-router.put('/:id', verifyToken, checkRights, async (req, res) => {
+router.put('/:id', validateObject, verifyToken, checkRights, async (req, res) => {
   try {
     const updatedObject = await ObjectModel.findByIdAndUpdate(
       req.params.id,
