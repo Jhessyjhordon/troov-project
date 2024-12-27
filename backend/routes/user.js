@@ -1,5 +1,5 @@
 const express = require('express');
-const User = require('../models/user');
+const UserModel = require('../models/user');
 const authMiddleware = require('../middleware/auth'); // Middleware JWT
 
 const router = express.Router();
@@ -10,7 +10,7 @@ router.get('/:id', authMiddleware, async (req, res) => {
         const userId = req.params.id;
 
         // Vérifier si l'utilisateur existe et récupère ces informations
-        const user = await User.findById(userId).select('-password'); // Récupère tout sauf le mot de passe
+        const user = await UserModel.findById(userId).select('-password'); // Récupère tout sauf le mot de passe
         if (!user) {
             return res.status(404).json({ message: 'Utilisateur non trouvé.' });
         }
@@ -27,7 +27,7 @@ router.put('/:id', authMiddleware, async (req, res) => {
         const userId = req.params.id;
 
         // Vérifier si l'utilisateur existe
-        const user = await User.findById(userId);
+        const user = await UserModel.findById(userId);
         if (!user) {
             return res.status(404).json({ message: 'Utilisateur non trouvé.' });
         }
@@ -50,7 +50,7 @@ router.delete('/:id', authMiddleware, async (req, res) => {
         const userId = req.params.id;
 
         // Supprimer l'utilisateur
-        const deletedUser = await User.findByIdAndDelete(userId);
+        const deletedUser = await UserModel.findByIdAndDelete(userId);
         if (!deletedUser) {
             return res.status(404).json({ message: 'Utilisateur non trouvé.' });
         }
