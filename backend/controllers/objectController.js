@@ -1,5 +1,41 @@
 const ObjectModel = require('../models/object');
 
+/**
+ * Crée un nouvel objet dans la base de données.
+ * @async
+ * @function createObject
+ * @param {Object} req - La requête HTTP.
+ * @param {Object} req.body - Les données envoyées pour créer l'objet.
+ * @param {string} req.body.name - Le nom de l'objet (requis).
+ * @param {string} req.body.description - La description de l'objet (requis).
+ * @param {string} req.body.userId - L'identifiant de l'utilisateur (requis).
+ * @param {Object} res - La réponse HTTP.
+ * @returns {Object} 201 - Objet créé avec succès.
+ * @returns {Object} 400 - Requête invalide (champs manquants).
+ * @returns {Object} 500 - Erreur interne du serveur.
+ * @example
+ * // Exemple de requête
+ * POST /api/objects
+ * {
+ *   "name": "Test Object",
+ *   "description": "Ceci est un objet de test",
+ *   "userId": "123456"
+ * }
+ * @example
+ * // Exemple de réponse
+ * HTTP/1.1 201 Created
+ * {
+ *   "message": "Objet créé avec succès.",
+ *   "object": {
+ *     "_id": "123456",
+ *     "name": "Test Object",
+ *     "description": "Ceci est un objet de test",
+ *     "userId": "123456",
+ *     "createdAt": "2024-12-27T00:00:00.000Z",
+ *     "updatedAt": "2024-12-27T00:00:00.000Z"
+ *   }
+ * }
+ */
 exports.createObject = async (req, res) => {
   try {
     const { name, description, userId } = req.body;
@@ -13,6 +49,31 @@ exports.createObject = async (req, res) => {
   }
 };
 
+/**
+ * Récupère un objet par son ID.
+ * @async
+ * @function getObjectById
+ * @param {Object} req - La requête HTTP.
+ * @param {string} req.params.id - L'ID de l'objet à récupérer.
+ * @param {Object} res - La réponse HTTP.
+ * @returns {Object} 200 - Objet récupéré avec succès.
+ * @returns {Object} 404 - Objet non trouvé.
+ * @returns {Object} 500 - Erreur interne du serveur.
+ * @example
+ * // Exemple de requête
+ * GET /api/objects/123456
+ * @example
+ * // Exemple de réponse
+ * HTTP/1.1 200 OK
+ * {
+ *   "_id": "123456",
+ *   "name": "Test Object",
+ *   "description": "Ceci est un objet de test",
+ *   "userId": "123456",
+ *   "createdAt": "2024-12-27T00:00:00.000Z",
+ *   "updatedAt": "2024-12-27T00:00:00.000Z"
+ * }
+ */
 exports.getObjectById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -28,6 +89,32 @@ exports.getObjectById = async (req, res) => {
   }
 };
 
+/**
+ * Récupère tous les objets de la base de données.
+ * @async
+ * @function getAllObjects
+ * @param {Object} req - La requête HTTP.
+ * @param {Object} res - La réponse HTTP.
+ * @returns {Array<Object>} 200 - Liste des objets récupérés.
+ * @returns {Object} 404 - Aucun objet trouvé.
+ * @returns {Object} 500 - Erreur interne du serveur.
+ * @example
+ * // Exemple de requête
+ * GET /api/objects
+ * @example
+ * // Exemple de réponse
+ * HTTP/1.1 200 OK
+ * [
+ *   {
+ *     "_id": "123456",
+ *     "name": "Test Object",
+ *     "description": "Ceci est un objet de test",
+ *     "userId": "123456",
+ *     "createdAt": "2024-12-27T00:00:00.000Z",
+ *     "updatedAt": "2024-12-27T00:00:00.000Z"
+ *   }
+ * ]
+ */
 exports.getAllObjects = async (req, res) => {
   try {
     const objects = await ObjectModel.find();
@@ -42,6 +129,37 @@ exports.getAllObjects = async (req, res) => {
   }
 };
 
+/**
+ * Met à jour un objet par son ID.
+ * @async
+ * @function updateObject
+ * @param {Object} req - La requête HTTP.
+ * @param {string} req.params.id - L'ID de l'objet à mettre à jour.
+ * @param {Object} req.body - Les nouvelles données pour l'objet.
+ * @param {Object} res - La réponse HTTP.
+ * @returns {Object} 200 - Objet mis à jour avec succès.
+ * @returns {Object} 404 - Objet non trouvé.
+ * @returns {Object} 400 - Données invalides envoyées pour la mise à jour.
+ * @returns {Object} 500 - Erreur interne du serveur.
+ * @example
+ * // Exemple de requête
+ * PUT /api/objects/123456
+ * {
+ *   "name": "Nouveau nom",
+ *   "description": "Nouvelle description"
+ * }
+ * @example
+ * // Exemple de réponse
+ * HTTP/1.1 200 OK
+ * {
+ *   "_id": "123456",
+ *   "name": "Nouveau nom",
+ *   "description": "Nouvelle description",
+ *   "userId": "123456",
+ *   "createdAt": "2024-12-27T00:00:00.000Z",
+ *   "updatedAt": "2024-12-27T01:00:00.000Z"
+ * }
+ */
 exports.updateObject = async (req, res) => {
   try {
     const updatedObject = await ObjectModel.findByIdAndUpdate(
@@ -60,6 +178,26 @@ exports.updateObject = async (req, res) => {
   }
 };
 
+/**
+ * Supprime un objet par son ID.
+ * @async
+ * @function deleteObject
+ * @param {Object} req - La requête HTTP.
+ * @param {string} req.params.id - L'ID de l'objet à supprimer.
+ * @param {Object} res - La réponse HTTP.
+ * @returns {Object} 200 - Message indiquant que l'objet a été supprimé avec succès.
+ * @returns {Object} 404 - Objet non trouvé.
+ * @returns {Object} 500 - Erreur interne du serveur.
+ * @example
+ * // Exemple de requête
+ * DELETE /api/objects/123456
+ * @example
+ * // Exemple de réponse
+ * HTTP/1.1 200 OK
+ * {
+ *   "message": "Objet supprimé avec succès."
+ * }
+ */
 exports.deleteObject = async (req, res) => {
   try {
     const deletedObject = await ObjectModel.findByIdAndDelete(req.params.id);

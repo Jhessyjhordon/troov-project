@@ -4,6 +4,30 @@ const User = require('../models/user');
 
 require('dotenv').config();
 
+/**
+ * Connexion d'un utilisateur.
+ * @async
+ * @function
+ * @param {Object} req - La requête HTTP.
+ * @param {Object} res - La réponse HTTP.
+ * @description Authentifie un utilisateur en comparant son mot de passe et génère un token JWT.
+ * @returns {Object} 200 - Connexion réussie avec un token JWT.
+ * @returns {Object} 400 - Mot de passe incorrect.
+ * @returns {Object} 404 - Utilisateur non trouvé.
+ * @returns {Object} 500 - Erreur interne du serveur.
+ * @example
+ * // Entrée (JSON Body)
+ * {
+ *   "email": "test@example.com",
+ *   "password": "Password123"
+ * }
+ * @example
+ * // Sortie (200 OK)
+ * {
+ *   "message": "Connexion réussie.",
+ *   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+ * }
+ */
 exports.loginController = async (req, res) => {
     try {
         const { email, password } = req.body;
