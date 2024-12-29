@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const apiRoutes = require('./routes/api'); // Importation des routes API
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
+const cookieParser = require('cookie-parser'); // Importer cookie-parser
 const cors = require('cors');
 
 
@@ -23,7 +24,11 @@ const swaggerOptions = {
 
 const swaggerDocs = swaggerJsdoc(swaggerOptions);
 
-app.use(cors()); // Autoriser CORS
+app.use(cookieParser()); // Utiliser cookie-parser comme middleware
+app.use(cors({
+    origin: process.env.CLIENT_URL || 'http://localhost:3000', // Autorisation de CORS avec une origine spécifique
+    credentials: true, // Permet les cookies
+})); 
 app.use(express.json()); // Middleware pour parser le JSON
 
 // Connexion à MongoDB
