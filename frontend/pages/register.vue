@@ -29,12 +29,16 @@ const registerUser = async () => {
   try {
     const response = await axios.post('/api/users/register', {
       email: email.value,
-      password: password.value
+      password: password.value,
     });
     success.value = 'Registration successful!';
     error.value = '';
     email.value = '';
     password.value = '';
+    // Rediriger vers la page Login
+    setTimeout(() => {
+      window.location.href = '/login';
+    }, 1500);
   } catch (err) {
     error.value = 'An error occurred during registration.';
     success.value = '';
