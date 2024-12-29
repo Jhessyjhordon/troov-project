@@ -53,6 +53,14 @@ exports.loginController = async (req, res) => {
         // Génération du token (si nécessaire)
         const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
+        // Définition du cookie HTTP-Only
+        res.cookie('authToken', token, {
+            httpOnly: true, // Empêche les scripts d'accéder au cookie
+            secure: process.env.NODE_ENV === 'production', // HTTPS uniquement en production et false en localhost
+            sameSite: 'Strict', // Empêche les attaques CSRF basées sur les navigateurs
+            maxAge: 24 * 60 * 60 * 1000, // Expiration (1 jour ici)
+        });
+
         res.status(200).json({ message: 'Connexion réussie.', token });
     } catch (error) {
         res.status(500).json({ message: 'Erreur lors de la connexion.', error: error.message });
