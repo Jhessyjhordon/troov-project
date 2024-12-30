@@ -1,6 +1,7 @@
 const express = require('express');
 const registerRoute = require('./register'); 
 const loginRoute = require('./login'); 
+const logoutRoute = require('./logout'); 
 const userRoute = require('./user'); 
 const objectRoute = require('./object'); 
 
@@ -18,6 +19,7 @@ router.get('/test', (req, res) => {
 // Inclure les routes spécifiques
 router.use('/users', registerRoute);
 router.use('/users', loginRoute);
+router.use('/users', logoutRoute);
 router.use('/users', userRoute);
 router.use('/object', objectRoute);
 

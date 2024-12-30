@@ -9,25 +9,16 @@
         </div>
         <div v-if="error" class="alert alert-danger">{{ error }}</div>
         <ul class="list-group">
-            <li
-                v-for="object in objects"
-                :key="object._id"
-                class="list-group-item d-flex justify-content-between align-items-center"
-            >
+            <li v-for="object in objects" :key="object._id"
+                class="list-group-item d-flex justify-content-between align-items-center">
                 <span>
                     {{ object.name }} - {{ object.description }}
                 </span>
                 <div>
-                    <button
-                        class="btn btn-sm btn-warning me-2"
-                        @click="editObject(object._id)"
-                    >
+                    <button class="btn btn-sm btn-warning me-2" @click="editObject(object._id)">
                         Modifier
                     </button>
-                    <button
-                        class="btn btn-sm btn-danger"
-                        @click="deleteObject(object._id)"
-                    >
+                    <button class="btn btn-sm btn-danger" @click="deleteObject(object._id)">
                         Supprimer
                     </button>
                 </div>
@@ -37,6 +28,10 @@
 </template>
 
 <script setup>
+definePageMeta({
+    middleware: 'auth', // Le nom du middleware pour la gestion d'accès
+});
+
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useNuxtApp } from "#app";

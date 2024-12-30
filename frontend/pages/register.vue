@@ -1,5 +1,6 @@
 <template>
   <div class="container mt-5">
+    <h1>Inscription</h1>
     <form @submit.prevent="registerUser">
       <div v-if="error" class="alert alert-danger mt-3">{{ error }}</div>
       <div v-if="success" class="alert alert-success mt-3">{{ success }}</div>
