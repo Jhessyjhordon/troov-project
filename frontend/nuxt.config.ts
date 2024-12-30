@@ -6,5 +6,11 @@ export default defineNuxtConfig({
   css: ['bootstrap/dist/css/bootstrap.min.css'],
   build: {
     transpile: ['bootstrap']
-  }
+  },
+  runtimeConfig: {
+    public: {
+      baseURL: process.env.BASE_URL || 'http://localhost:5000/api',
+    },
+  },
+  plugins: ['~/plugins/axios.js']
 })
