@@ -18,8 +18,9 @@
 
 <script setup>
 import { ref } from 'vue';
-import axios from 'axios';
+import { useNuxtApp } from '#app';
 
+const { $axios } = useNuxtApp(); // Utiliser l'instance Axios de Nuxt
 const email = ref('');
 const password = ref('');
 const error = ref('');
@@ -27,11 +28,11 @@ const success = ref('');
 
 const registerUser = async () => {
   try {
-    const response = await axios.post('/api/users/register', {
+    await $axios.post('/users/register', {
       email: email.value,
       password: password.value,
     });
-    success.value = 'Registration successful!';
+    success.value = 'Inscription réussit ! Vous allez être rediriger vers la page de login.';
     error.value = '';
     email.value = '';
     password.value = '';
@@ -40,7 +41,7 @@ const registerUser = async () => {
       window.location.href = '/login';
     }, 1500);
   } catch (err) {
-    error.value = 'An error occurred during registration.';
+    error.value = 'Erreur lors de l\'inscription';
     success.value = '';
   }
 };

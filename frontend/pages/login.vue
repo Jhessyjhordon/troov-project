@@ -19,8 +19,9 @@
   
   <script setup>
   import { ref } from 'vue';
-  import axios from 'axios';
-  
+  import { useNuxtApp } from '#app';
+
+  const { $axios } = useNuxtApp(); // Utiliser l'instance Axios de Nuxt  
   const email = ref('');
   const password = ref('');
   const error = ref('');
@@ -28,18 +29,18 @@
   
   const loginUser = async () => {
     try {
-      const response = await axios.post('/api/users/login', {
+      await $axios.post('/users/login', {
         email: email.value,
         password: password.value,
       });
-      success.value = 'Login successful!';
+      success.value = 'Enregistrement réussi. Vous pouvez maintenant vous connecter.';
       error.value = '';
       // Sauvegarder le token dans le localStorage
-      localStorage.setItem('token', response.data.token);
+      // localStorage.setItem('token', response.data.token);
       // Redirection (par exemple : vers la page d'accueil ou un tableau de bord)
-      window.location.href = '/dashboard';
+      window.location.href = '/';
     } catch (err) {
-      error.value = 'Invalid email or password.';
+      error.value = 'Une erreur est survenue. Veuillez réessayer.';
       success.value = '';
     }
   };
