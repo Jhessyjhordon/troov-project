@@ -8,10 +8,7 @@ const objectValidationSchema = Joi.object({
   description: Joi.string().min(10).required().messages({
     'string.min': 'La description doit contenir au moins 10 caractères.',
     'any.required': 'La description est obligatoire.',
-  }),
-  userId: Joi.string().required().messages({
-    'any.required': 'L\'ID utilisateur est obligatoire.',
-  }),
+  })
 });
 
 const validateObject = (req, res, next) => {

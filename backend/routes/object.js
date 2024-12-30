@@ -1,6 +1,6 @@
 const express = require('express');
 const objectController = require('../controllers/objectController');
-const verifyToken = require('../middleware/auth');
+const authMiddleware = require('../middleware/auth');
 const checkRights = require('../middleware/checkRights');
 const validateObject = require('../middleware/validateObject');
 
@@ -33,7 +33,7 @@ const router = express.Router();
  *   }
  * }
  */
-router.post('/', verifyToken, validateObject, objectController.createObject);
+router.post('/', authMiddleware, validateObject, objectController.createObject);
 
 /**
  * @route GET /api/object/:id
@@ -54,7 +54,7 @@ router.post('/', verifyToken, validateObject, objectController.createObject);
  *   "updatedAt": "2024-12-27T00:00:00.000Z"
  * }
  */
-router.get('/:id', verifyToken, checkRights, objectController.getObjectById);
+router.get('/:id', authMiddleware, checkRights, objectController.getObjectById);
 
 /**
  * @route GET /api/object
@@ -77,7 +77,7 @@ router.get('/:id', verifyToken, checkRights, objectController.getObjectById);
  *   }
  * ]
  */
-router.get('/', verifyToken, objectController.getAllObjects);
+router.get('/', authMiddleware, objectController.getAllObjects);
 
 /**
  * @route PUT /api/object/:id
@@ -102,7 +102,7 @@ router.get('/', verifyToken, objectController.getAllObjects);
  *   "updatedAt": "2024-12-27T01:00:00.000Z"
  * }
  */
-router.put('/:id', verifyToken, validateObject, checkRights, objectController.updateObject);
+router.put('/:id', authMiddleware, validateObject, checkRights, objectController.updateObject);
 
 /**
  * @route DELETE /api/object/:id
@@ -118,6 +118,6 @@ router.put('/:id', verifyToken, validateObject, checkRights, objectController.up
  *   "message": "Objet supprimé avec succès."
  * }
  */
-router.delete('/:id', verifyToken, checkRights, objectController.deleteObject);
+router.delete('/:id', authMiddleware, checkRights, objectController.deleteObject);
 
 module.exports = router;

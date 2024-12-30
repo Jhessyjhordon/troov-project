@@ -38,9 +38,18 @@ const ObjectModel = require('../models/object');
  */
 exports.createObject = async (req, res) => {
   try {
-    const { name, description, userId } = req.body;
+    const { name, description } = req.body; // Récupérer les champs envoyés
 
-    const newObject = new ObjectModel({ name, description, userId });
+    if (!req.userId) {
+      return res.status(400).json({ message: "L'ID utilisateur est obligatoire." });
+    }
+
+    // Créer un nouvel objet
+    const newObject = new ObjectModel({
+      name,
+      description,
+      userId: req.userId, // Utiliser l'ID utilisateur du middleware
+    });
     const savedObject = await newObject.save();
 
     res.status(201).json({ message: 'Objet créé avec succès.', object: savedObject });
