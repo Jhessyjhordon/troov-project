@@ -19,7 +19,7 @@ const authMiddleware = (req, res, next) => {
         next(); // Passe au middleware suivant ou au contrôleur
     } catch (error) {
         // console.error('Erreur lors de la vérification du token :', error);
-        return res.status(403).json({ message: 'Token invalide ou expiré ----> ici.', error: error.message });
+        return res.status(403).json({ message: 'Token invalide ou expiré.', error: error.message });
     }
 };
 
