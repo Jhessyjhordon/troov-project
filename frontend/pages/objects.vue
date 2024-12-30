@@ -24,6 +24,7 @@
                 </div>
             </li>
         </ul>
+        <button class="btn btn-secondary mt-3" @click="goBack">Retour</button>
     </div>
 </template>
 
@@ -65,5 +66,9 @@ const deleteObject = async (id) => {
     } catch (err) {
         error.value = "Erreur lors de la suppression de l'objet.";
     }
+};
+
+const goBack = () => {
+    router.back(); // Retourne à la page précédente
 };
 </script>

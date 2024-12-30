@@ -38,7 +38,7 @@
 
     <!-- Contenu principal -->
     <div class="container">
-      <router-view />
+      <NuxtPage />
     </div>
   </div>
 </template>
@@ -53,15 +53,23 @@ const router = useRouter();
 
 const isLoggedIn = ref(false);
 
-onMounted(() => {
-  // Vérifie si un token existe dans les cookies
-  isLoggedIn.value = document.cookie.includes('authToken');
+const validateAuth = async () => {
+  try {
+    // Appel à l'API pour valider l'authentification
+    await $axios.get('/validate/auth', { withCredentials: true });
+    isLoggedIn.value = true; // Si l'authentification est validée
+  } catch (error) {
+    isLoggedIn.value = false; // Si non authentifié
+  }
+};
+
+onMounted(async () => {
+  await validateAuth();
 });
 
 const logout = async () => {
   try {
-    await $axios.post('/user/logout', {}, { withCredentials: true });
-    document.cookie = 'authToken=; Max-Age=0'; // Supprime le cookie côté frontend
+    await $axios.post('/users/logout', {}, { withCredentials: true });
     isLoggedIn.value = false; // Met à jour l'état
     router.push('/'); // Redirige vers la page d'accueil
   } catch (error) {

@@ -10,9 +10,13 @@
                 <label for="description" class="form-label">Description</label>
                 <textarea id="description" class="form-control" v-model="object.description" required></textarea>
             </div>
-            <button type="submit" class="btn btn-primary">
-                {{ isEditMode ? "Modifier" : "Ajouter" }}
-            </button>
+            <div class="d-flex justify-content-between">
+
+                <button class="btn btn-secondary " @click="goBack">Retour</button>
+                <button type="submit" class="btn btn-primary">
+                    {{ isEditMode ? "Modifier" : "Ajouter" }}
+                </button>
+            </div>
         </form>
     </div>
 </template>
@@ -69,5 +73,9 @@ const submitObject = async () => {
     } catch (error) {
         console.error("Erreur lors de l'enregistrement de l'objet :", error.response?.data || error.message);
     }
+};
+
+const goBack = () => {
+    router.back(); // Retourne à la page précédente
 };
 </script>

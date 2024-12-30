@@ -1,22 +1,24 @@
 const express = require('express');
-const { logoutController } = require('../controllers/logoutController');
+const { validateController } = require('../controllers/validateController');
 
 const router = express.Router();
 
 /**
- * @route POST /api/users/logout
+ * @route POST /api/validate/auth
  * @description Deconnexion d'un utilisateur
  * @access Public
  * @example
  * // Requête
- * POST /api/users/logout
+ * POST /api/validate/auth
  * // Réponse
  * 200 OK
  * {
  *   "message": "Deonnexion réussie."
  * }
  */
-router.post('/logout', logoutController);
+
+router.get('/auth', validateController);
+  
 
 
 module.exports = router;
