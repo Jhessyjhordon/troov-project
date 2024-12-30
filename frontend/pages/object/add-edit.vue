@@ -4,22 +4,11 @@
         <form @submit.prevent="submitObject">
             <div class="mb-3">
                 <label for="name" class="form-label">Nom de l'objet</label>
-                <input
-                    type="text"
-                    id="name"
-                    class="form-control"
-                    v-model="object.name"
-                    required
-                />
+                <input type="text" id="name" class="form-control" v-model="object.name" required />
             </div>
             <div class="mb-3">
                 <label for="description" class="form-label">Description</label>
-                <textarea
-                    id="description"
-                    class="form-control"
-                    v-model="object.description"
-                    required
-                ></textarea>
+                <textarea id="description" class="form-control" v-model="object.description" required></textarea>
             </div>
             <button type="submit" class="btn btn-primary">
                 {{ isEditMode ? "Modifier" : "Ajouter" }}
@@ -29,6 +18,10 @@
 </template>
 
 <script setup>
+definePageMeta({
+    middleware: 'auth', // Le nom du middleware pour la gestion d'accès
+});
+
 import { ref, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useNuxtApp } from "#app";
@@ -64,7 +57,7 @@ const submitObject = async () => {
         // Exclure l'attribut _id des données envoyées
         const { _id, userId, createdAt, updatedAt, __v, ...payload } = object.value;
         console.log(object.value);
-        
+
         if (isEditMode.value) {
             // Modification de l'objet
             await $axios.put(`/object/${route.query.id}`, payload, { withCredentials: true });
