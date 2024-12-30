@@ -35,9 +35,6 @@
       });
       success.value = 'Enregistrement réussi. Vous pouvez maintenant vous connecter.';
       error.value = '';
-      // Sauvegarder le token dans le localStorage
-      // localStorage.setItem('token', response.data.token);
-      // Redirection (par exemple : vers la page d'accueil ou un tableau de bord)
       window.location.href = '/';
     } catch (err) {
       error.value = 'Une erreur est survenue. Veuillez réessayer.';
