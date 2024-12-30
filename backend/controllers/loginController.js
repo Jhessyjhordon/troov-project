@@ -51,7 +51,7 @@ exports.loginController = async (req, res) => {
         }
 
         // Génération du token (si nécessaire)
-        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
 
         // Définition du cookie HTTP-Only
         res.cookie('authToken', token, {

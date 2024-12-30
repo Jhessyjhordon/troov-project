@@ -90,26 +90,35 @@ exports.getObjectById = async (req, res) => {
 };
 
 /**
- * Récupère tous les objets de la base de données.
+ * Récupère tous les objets de la base de données spécifique à un utilisateur.
  * @async
  * @function getAllObjects
  * @param {Object} req - La requête HTTP.
  * @param {Object} res - La réponse HTTP.
- * @returns {Array<Object>} 200 - Liste des objets récupérés.
+ * @param {string} userId - L'identifiant de l'utilisateur dont on souhaite récupérer les objets.
+ * @returns {Array<Object>} 200 - Liste d'objets liés à l'utilisateur.
  * @returns {Object} 404 - Aucun objet trouvé.
  * @returns {Object} 500 - Erreur interne du serveur.
  * @example
  * // Exemple de requête
- * GET /api/objects
+ * GET /api/object
  * @example
  * // Exemple de réponse
  * HTTP/1.1 200 OK
  * [
  *   {
- *     "_id": "123456",
+ *     "_id": "1",
  *     "name": "Test Object",
  *     "description": "Ceci est un objet de test",
- *     "userId": "123456",
+ *     "userId": "612546",
+ *     "createdAt": "2024-12-27T00:00:00.000Z",
+ *     "updatedAt": "2024-12-27T00:00:00.000Z"
+ *   },
+ *   {
+ *     "_id": "2",
+ *     "name": "Test Object 2",
+ *     "description": "Ceci est un objet de test 2",
+ *     "userId": "612546",
  *     "createdAt": "2024-12-27T00:00:00.000Z",
  *     "updatedAt": "2024-12-27T00:00:00.000Z"
  *   }
@@ -117,7 +126,7 @@ exports.getObjectById = async (req, res) => {
  */
 exports.getAllObjects = async (req, res) => {
   try {
-    const objects = await ObjectModel.find();
+    const objects = await ObjectModel.find({ userId: req.userId });
 
     if (!objects.length) {
       return res.status(404).json({ message: 'Aucun objet trouvé.' });

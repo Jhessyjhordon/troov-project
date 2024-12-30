@@ -77,7 +77,7 @@ router.get('/:id', verifyToken, checkRights, objectController.getObjectById);
  *   }
  * ]
  */
-router.get('/', verifyToken, checkRights, objectController.getAllObjects);
+router.get('/', verifyToken, objectController.getAllObjects);
 
 /**
  * @route PUT /api/object/:id
