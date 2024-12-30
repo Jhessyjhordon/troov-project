@@ -59,6 +59,7 @@ exports.loginController = async (req, res) => {
             secure: process.env.NODE_ENV === 'production', // HTTPS uniquement en production et false en localhost
             sameSite: 'Strict', // Empêche les attaques CSRF basées sur les navigateurs
             maxAge: 24 * 60 * 60 * 1000, // Expiration (1 jour ici)
+            path: '/',
         });
 
         res.status(200).json({ message: 'Connexion réussie.', token });

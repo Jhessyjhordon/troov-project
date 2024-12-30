@@ -4,6 +4,7 @@ const loginRoute = require('./login');
 const logoutRoute = require('./logout'); 
 const userRoute = require('./user'); 
 const objectRoute = require('./object'); 
+const validateRoute = require('./validate'); 
 
 const router = express.Router();
 
@@ -22,5 +23,6 @@ router.use('/users', loginRoute);
 router.use('/users', logoutRoute);
 router.use('/users', userRoute);
 router.use('/object', objectRoute);
+router.use('/validate', validateRoute);
 
 module.exports = router;
