@@ -5,7 +5,7 @@ const router = express.Router();
 
 /**
  * @route POST /api/validate/auth
- * @description Deconnexion d'un utilisateur
+ * @description vérifier si l'utilisateur est authentifié
  * @access Public
  * @example
  * // Requête
@@ -13,7 +13,7 @@ const router = express.Router();
  * // Réponse
  * 200 OK
  * {
- *   "message": "Deonnexion réussie."
+ *   "message": "Utilisateur inconnus."
  * }
  */
 

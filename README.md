@@ -1,6 +1,6 @@
-# Troov Project
+# Projet TROOV
 
-Ce projet est une application Full Stack développée avec Nuxt.js (frontend) et Node.js/Express (backend). Elle utilise MongoDB pour la gestion des données et suit une architecture MVC. Ce projet a été réalisé dans le cadre d'un test technique.
+Ce projet est une application permettant la gestion des utilisateurs et de leurs objets. Elle comprend un backend Node.js et un frontend Nuxt.js, avec plusieurs fonctionnalités pour la création, modification, suppression, et affichage des objets utilisateurs, ainsi qu'un système d'authentification sécurisé.
 
 ## Structure du projet
 
@@ -11,125 +11,142 @@ Le projet est divisé en deux parties principales :
 ```
 troov-project/
 ├── backend/        # Code serveur (API)
-├── frontend/       # Code client (Interface utilisateur)
-├── shared/         # Documentation commune et fichiers partagés
-└── .gitignore      # Liste des fichiers ignorés par Git
+│   ├── controllers/ # Contient la logique métier
+│   ├── middlewares/ # Contient les middlewares (auth, validation, etc.)
+│   ├── models/      # Modèles Mongoose
+│   ├── routes/      # Routes API
+│   ├── tests/       # Test API et models
+│   ├── app.js       # Configuration principale d'Express
+│   ├── server.js    # Démarrage du serveur
+├── frontend/       # Code client (Nuxt.js)
+│   ├── components/  # Composants réutilisables
+│   ├── pages/       # Pages Nuxt
+│   ├── plugins/     # Configuration globale (Axios, etc.)
+│   ├── middleware/  # Middleware Nuxt.js
+├── shared/         # Documentation commune
+├── README.md       # Documentation principale
+├── .gitignore      # Liste des fichiers ignorés par Git
 ```
-
----
-
-## Prérequis
-
-Avant de commencer, assurez-vous d’avoir :
-- **Node.js** (v14 ou plus) : [Télécharger ici](https://nodejs.org/)
-- **npm** ou **yarn** : Inclus avec Node.js
-- **MongoDB Atlas** : Pour la base de données (ou une instance locale de MongoDB).
-
----
-
-## Installation
-
-### Backend
-1. Naviguez dans le dossier backend :
-   ```bash
-   cd backend
-   ```
-2. Installez les dépendances :
-   ```bash
-   npm install
-   ```
-3. Configurez les variables d'environnement en créant un fichier `.env` :
-   ```plaintext
-   MONGO_URI=Votre_URI_de_MongoDB
-   PORT=5000
-   JWT_SECRET=VotreCléJWT
-   ```
-4. Démarrez le serveur backend en mode développement :
-   ```bash
-   npm run dev
-   ```
-5. L'API sera disponible sur `http://localhost:5000/api`.
-
-### Frontend
-1. Naviguez dans le dossier frontend :
-   ```bash
-   cd ../frontend
-   ```
-2. Installez les dépendances :
-   ```bash
-   npm install
-   ```
-3. Configurez le fichier `.env` (si nécessaire) pour pointer vers l'API backend.
-4. Lancez le projet en mode développement :
-   ```bash
-   npm run dev
-   ```
-5. L'application frontend sera disponible sur `http://localhost:3000`.
 
 ---
 
 ## Fonctionnalités principales
 
-1. **Authentification sécurisée :**
-   - Inscription et connexion des utilisateurs avec JWT.
-2. **Gestion des objets :**
-   - CRUD complet pour gérer des objets liés aux utilisateurs.
-3. **API REST robuste :**
-   - Gestion des données via des endpoints bien documentés.
-4. **Architecture modulaire :**
-   - Routes, contrôleurs, et middlewares séparés pour une meilleure maintenabilité.
+### Backend
+
+1. **Système d'authentification sécurisée** :
+   - Connexion et déconnexion avec JWT.
+   - Middleware pour protéger les routes sensibles.
+   - Gestion des cookies sécurisés (`httpOnly`)
+
+2. **Gestion des objets et utilisateurs** :
+   - Routes des objets et des utilisateurs.
+   - Gestion des droits d'accès aux objets.
+
+3. **Protection des routes** :
+   - Middleware pour protéger les pages réservées aux utilisateurs authentifiés.
+
+4. **Validation des sessions** :
+   - Endpoint `/validate/auth` pour vérifier l'authentification utilisateur.
+
+### Frontend
+
+1. **Pages sécurisées** :
+   - Protection des routes avec un middleware basé sur une validation côté backend.
+
+2. **Gestion des objets utilisateur** :
+   - Liste des objets avec options de modification et suppression.
+   - Formulaire pour ajouter ou modifier un objet.
+
+3. **UI intuitive** :
+   - Utilisation de Bootstrap pour une interface moderne et responsive.
+
+4. **Système de navigation** :
+   - Barre de navigation conditionnelle (boutons visibles selon l'état de connexion).
+
+5. **Retour utilisateur** :
+   - Messages d'erreur clairs pour guider l'utilisateur (ex : "Veuillez vous connecter pour accéder à cette page").
 
 ---
 
-## API Documentation
+### Prérequis
+- Node.js v20+
+- MongoDB Atlas 
+  - un base simple qui se nomme : troov-project
+  - 2 collections objects et users
 
-### **Endpoints principaux :**
-1. **Utilisateur :**
-   - `POST /api/users/register` : Inscription d'un nouvel utilisateur.
-   - `POST /api/users/login` : Connexion utilisateur.
-   - `GET /api/users/:id` : Récupérer un utilisateur par son ID.
-   - `PUT /api/users/:id` : Mettre à jour un utilisateur.
-   - `DELETE /api/users/:id` : Supprimer un utilisateur.
+### Installation
 
-2. **Objets :**
-   - `POST /api/objects` : Créer un objet.
-   - `GET /api/objects/:id` : Récupérer un objet par son ID.
-   - `GET /api/objects` : Récupérer tous les objets.
-   - `PUT /api/objects/:id` : Mettre à jour un objet.
-   - `DELETE /api/objects/:id` : Supprimer un objet.
-
-3. **Route de test :**
-   - `GET /api/test` : Vérifie le bon fonctionnement de l'API.
-
----
-
-## Technologies utilisées
-
-- **Frontend :**
-  - Nuxt.js (avec Bootstrap Vue pour le style)
-- **Backend :**
-  - Node.js / Express
-  - MongoDB avec Mongoose
-- **Langages :**
-  - JavaScript (ou TypeScript si utilisé)
-
----
-
-## Contribution
-
-1. Clonez le projet :
+1. **Cloner le projet** :
    ```bash
-   git clone https://github.com/username/troov-project.git
+   git clone https://github.com/Jhessyjhordon/troov-project.git
+   cd troov-project
    ```
-2. Créez une branche pour vos modifications :
+
+2. **Backend** :
    ```bash
-   git checkout -b feature/nouvelle-fonctionnalité
+   cd backend
+   npm install
+   npx nodemon server.js
    ```
-3. Une fois terminé, ouvrez une pull request.
 
----
+3. **Frontend** :
+   ```bash
+   cd frontend
+   npm install
+   npm run dev
+   ```
 
-## Auteur
+4. **Configuration** :
+   - Backend : Créer un fichier `.env` dans `backend/` avec les clés nécessaires :
+     ```env
+     MONGO_URI=mongodb_uri
+     PORT=5000
+     JWT_SECRET=jwt_secret
+     CLIENT_URL=http://localhost:3000
+     ```
+   - Frontend : Créer un fichier `.env` dans `frontend/` :
+     ```env
+     BASE_URL=http://localhost:5000/api
+     ```
 
-Développé par **Jhessyjhordon** dans le cadre du projet Troov.
+## Tests
+
+Les tests unitaires sont disponibles dans le dossier `backend/tests`.
+- Pour exécuter les tests :
+  ```bash
+  npm test
+  ```
+
+## Documentation des endpoints
+
+### Exemple : Endpoint de validation
+- **Route** : `GET /validate/auth`
+- **Description** : Vérifie l'authentification d'un utilisateur.
+- **Réponse** :
+  - 200 OK : `{ "userId": "..." }`
+  - 401 Unauthorized : `{ "message": "Non authentifié" }`
+  - 403 Forbidden : `{ "message": "Token invalide" }`
+
+#### **Utilisateurs**
+- **POST** `/users/register` : Inscription d’un nouvel utilisateur.
+- **POST** `/users/login` : Connexion d’un utilisateur existant.
+- **POST** `/users/logout` : Déconnexion de l’utilisateur.
+- **GET** `/users/:id` : Récupérer un utilisateur par son ID.
+- **PUT** `/users/:id` : Mise à jour d'un utilisateur par son ID.
+- **DELETE** `/users/:id` : Supprime un utilisateur par son ID.
+
+#### **Objets**
+- **GET** `/object` : Récupérer tous les objets de l'utilisateur connecté.
+- **GET** `/object/:id` : Récupérer un objet spécifique par son ID.
+- **POST** `/object` : Ajouter un nouvel objet.
+- **PUT** `/object/:id` : Modifier un objet existant.
+- **DELETE** `/object/:id` : Supprimer un objet par son ID.
+
+#### **Validation**
+- **GET** `/validate/auth` : vérifier si l'utilisateur est authentifié.
+
+## Licence
+
+Ce projet n'est pas sous licence et est destiné à une démonstration de compétences.
 
