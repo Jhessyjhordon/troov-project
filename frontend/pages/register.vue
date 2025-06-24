@@ -33,7 +33,7 @@ const registerUser = async () => {
       email: email.value,
       password: password.value,
     });
-    success.value = 'Inscription réussie ! Vous allez être redirigé vers la page de login.';
+    success.value = "Inscription réussie ! Redirection vers la page de login...";
     error.value = '';
     email.value = '';
     password.value = '';

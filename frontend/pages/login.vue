@@ -36,7 +36,7 @@ const loginUser = async () => {
       email: email.value,
       password: password.value,
     });
-    success.value = 'Enregistrement réussi. Vous pouvez maintenant vous connecter.';
+    success.value = 'Connexion réussie. Redirection en cours...';
     error.value = '';
     setTimeout(() => {
       router.push('/objects');
