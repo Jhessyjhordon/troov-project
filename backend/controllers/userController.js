@@ -78,7 +78,6 @@ exports.updateUser = async (req, res) => {
         const { email, password } = req.body;
         if (email) user.email = email;
         if (password) user.password = password; // Le hash sera fait automatiquement via le middleware Mongoose
-        if (password) user.password = password;
 
         const updatedUser = await user.save();
         res.status(200).json({ message: 'Utilisateur mis à jour.', user: updatedUser });
