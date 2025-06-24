@@ -4,16 +4,28 @@ const { validateController } = require('../controllers/validateController');
 const router = express.Router();
 
 /**
- * @route POST /api/validate/auth
+ * @route GET /api/validate/auth
  * @description vérifier si l'utilisateur est authentifié
  * @access Public
  * @example
  * // Requête
- * POST /api/validate/auth
+ * GET /api/validate/auth
  * // Réponse
  * 200 OK
  * {
- *   "message": "Utilisateur inconnus."
+ *   "userId": "<id>"
+ * }
+ * @example
+ * // Réponse
+ * 401 Unauthorized
+ * {
+ *   "message": "Non authentifié"
+ * }
+ * @example
+ * // Réponse
+ * 403 Forbidden
+ * {
+ *   "message": "Token invalide"
  * }
  */
 
